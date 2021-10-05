@@ -105,5 +105,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void signIn(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.i("Denna", "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            authStatusTV.setText("Signed in " + user.getEmail());
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.i("Denna", "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+
+    }
+    public void signOut(String email, String password) {
+        mAuth.signOut();
+        authStatusTV.setText("Signed out");
+    }
+
+
 
 }
